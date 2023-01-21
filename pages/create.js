@@ -14,11 +14,11 @@ function Create() {
         console.log(blog, "hai")
         let response = await axios.post('/create-blog', { blog })
         console.log(response, "response")
+        setBlog({ title: '', content: '' })
     }
 
     const submit = () => {
         setPost(blog)
-        console.log(blog, "hai")
     }
     return (
         <>
