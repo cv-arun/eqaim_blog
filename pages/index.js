@@ -2,10 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import Cards from '@/components/card';
+import axios from './api/axios';
+import ClipBoard from '@/components/clipBoard';
+import {useRouter} from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+function Home({data}) {
+  const router=useRouter()
   return (
     <>
       <Head>
@@ -14,11 +19,26 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1>
+      <main className=' mt-[143px]'>
+        <div className="grid grid-cols-3 gap-4 ">
+          {data.map((blog, i) => <Cards key={i} title={blog.title}id={blog._id} />)}
+        </div>
+        <div onClick={() => router.push('/create')} title='create new blog'
+          className='bg-[#E9E9E9] w-[80px] h-[70px] rounded-[20px] fixed bottom-[24px] right-[55px] shadow flex flex-col justify-center'>
+          <ClipBoard />
+        </div>
       </main>
     </>
   )
 }
+
+export const getStaticProps = async () => {
+  let data = await axios.get('/get-all-blog')
+  console.log(data.data)
+  return {
+    props: { data:data.data }
+  }
+}
+
+
+export default Home
