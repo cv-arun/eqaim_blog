@@ -32,7 +32,7 @@ function Home({data}) {
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   let data = await axios.get('/get-all-blog')
   console.log(data.data)
   return {
