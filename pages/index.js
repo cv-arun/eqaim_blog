@@ -36,7 +36,8 @@ export const getStaticProps = async () => {
   let data = await axios.get('/get-all-blog')
   console.log(data.data)
   return {
-    props: { data:data.data }
+    props: { data:data.data },
+    revalidate:1, 
   }
 }
 
